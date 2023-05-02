@@ -1,23 +1,12 @@
 import random
 
 
-def control_termostato(temperatura):
-    max = 25
-    min = 16
-    print(max)
-    medio_grado = 0.5
-    calefaccion = False
-    calefaccion_tiempo = 1800
-    temperaturas = (16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25)
-    # 30 min en segundos
-
-    #if calefaccion == True:
-
-def control(temp):
+def control():
+    temperaturas = (16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0, 24.5, 25.0)
     calefaccion = False
     tiempo = 0
     calefaccion_tiempo = 1800
-    aux = temp
+    aux = random.choice(temperaturas)
     iteracion = 0
     diccionario = politica_optima()
     while aux != 22:
@@ -85,17 +74,6 @@ def control(temp):
 
         if diccionario[str(aux)] == True:
             calefaccion = True
-
-
-
-
-        # hay que pasarlo a horas
-
-
-
-
-
-
 
 def politica_optima():
     "Se presupone con la iteración 0 ya esta hecha, por tanto los valores de los estados sera el coste más bajo"
@@ -404,4 +382,4 @@ def politica_optima():
 
 
 if __name__ == "__main__":
-    control(16.0)
+    control()
