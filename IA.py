@@ -103,46 +103,7 @@ def ecuaciones_bellman():
     V22 = 0
     V16 = V165 = V17 = V175 = V18 = V185 = V19 = V195 = V20 = V205 = V21 = V215 = V225 = V23 = V235 = V24 = V245 = V25 = costemin
 
-    # Probabilidades A (t entre 16,5 y 24)
 
-    Pet_A = 0.1
-    Petminus5_A = 0.2
-    Petplus5_A = 0.5
-    Petplus1_A = 0.2
-
-    Pat_A = 0.2
-    Patminus5_A = 0.7
-    Patplus5_A = 0.1
-    Patplus1_A = 0
-
-    #Probabilidades B(t=16)
-
-    Pe16_16 = 0.3
-    Pe165_16 = 0.5
-    Pe17_16 = 0.2
-
-    Pa16_16 = 0.9
-    Pa165_16 = 0.1
-    Pa17_16 = 0
-
-
-    # Probabilidades C(t=24.5)
-
-    Pe24_245 = 0.1
-    Pe245_245 = 0.2
-    Pe25_245 = 0.7
-
-    Pa24_245 = Patminus5_A
-    Pa245_245 = Pat_A
-    Pa25_245 = Patplus5_A
-
-    # Probabilidades D(t=25)
-
-    Pe245_25 = 0.1
-    Pe25_25 = 0.9
-
-    Pa245_25 = 0.7
-    Pa25_25 = 0.3
 
 
     iteracion = 1
@@ -257,15 +218,50 @@ def ecuaciones_bellman():
     valores = {"16.0": V16, "16.5" : V165, "17.0": V17, "17.5" : V175, "18.0": V18, "18.5": V185, "19.0" : V19, "19.5": V195, "20.0": V20,
                 "20.5": V205, "21.0": V21, "21.5" : V215, "22.0": 0, "22.5": V225, "23.0" : V23, "23.5": V235, "24.0": V24, "24.5" : V245, "25.0" : V25}
 
-    return politica_optima(Pa165_16, Pa16_16, Pa17_16, Pa245_245, Pa245_25, Pa24_245, Pa25_245, Pa25_25, Pat_A, Patminus5_A,
-                       Patplus5_A, Pe165_16, Pe16_16, Pe17_16, Pe245_245, Pe245_25, Pe24_245, Pe25_245, Pe25_25, Pet_A,
-                       Petminus5_A, Petplus1_A, Petplus5_A, coste_a, coste_e, valores)
+    return politica_optima(coste_a, coste_e, valores)
 
 
 
-def politica_optima(Pa165_16, Pa16_16, Pa17_16, Pa245_245, Pa245_25, Pa24_245, Pa25_245, Pa25_25, Pat_A, Patminus5_A,
-                Patplus5_A, Pe165_16, Pe16_16, Pe17_16, Pe245_245, Pe245_25, Pe24_245, Pe25_245, Pe25_25, Pet_A,
-                Petminus5_A, Petplus1_A, Petplus5_A, coste_a, coste_e, valores):
+def politica_optima(coste_a, coste_e, valores):
+    # Probabilidades A (t entre 16,5 y 24)
+
+    Pet_A = 0.1
+    Petminus5_A = 0.2
+    Petplus5_A = 0.5
+    Petplus1_A = 0.2
+
+    Pat_A = 0.2
+    Patminus5_A = 0.7
+    Patplus5_A = 0.1
+    Patplus1_A = 0
+
+    # Probabilidades B(t=16)
+
+    Pe16_16 = 0.3
+    Pe165_16 = 0.5
+    Pe17_16 = 0.2
+
+    Pa16_16 = 0.9
+    Pa165_16 = 0.1
+    Pa17_16 = 0
+
+    # Probabilidades C(t=24.5)
+
+    Pe24_245 = 0.1
+    Pe245_245 = 0.2
+    Pe25_245 = 0.7
+
+    Pa24_245 = Patminus5_A
+    Pa245_245 = Pat_A
+    Pa25_245 = Patplus5_A
+
+    # Probabilidades D(t=25)
+
+    Pe245_25 = 0.1
+    Pe25_25 = 0.9
+
+    Pa245_25 = 0.7
+    Pa25_25 = 0.3
 
     diccionario = {"16.0": None, "16.5": None, "17.0": None, "17.5": None, "18.0": None, "18.5": None, "19.0": None,
                    "19.5": None, "20.0": None,
