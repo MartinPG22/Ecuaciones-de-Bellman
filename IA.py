@@ -1,5 +1,18 @@
 import random
 
+import csv
+
+matriz = []
+
+with open('archivo.csv', newline='') as archivo_csv:
+    lector_csv = csv.reader(archivo_csv, delimiter=',')
+    for fila in lector_csv:
+        matriz.append(fila)
+
+
+print("matriz",matriz)
+print( "fila 0",matriz[1][0])
+
 
 def control():
     temperaturas = (16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0, 24.5, 25.0)
@@ -135,80 +148,89 @@ def ecuaciones_bellman():
     iteracion = 1
     aux = 0
 
-    while V16 - aux > 0.01:
+
+    while (V16 - aux > 0.00001 and iteracion < 10000):
 
         aux = V16
         print("Iteración:", iteracion)
-        V16_new = min( coste_e + Pe16_16 * V16 + Pe165_16 * V165 + Pe17_16 * V17 ,
-                       coste_a + Pa16_16 * V16 + Pa17_16 * V17 + Pa165_16 * V165)
+        V16_new = min( coste_e + float(matriz[1][1]) * V16 + float(matriz[1][2]) * V165 + float(matriz[1][3]) * V17,
+                       coste_a + float(matriz[2][1]) * V16 + float(matriz[2][2]) * V165 + float(matriz[2][3]) * V17)
         print("V16", V16_new)
 
-        V165_new = min( coste_e + Petminus5_A * V16 + Pet_A * V165 + Petplus5_A * V17 + Petplus1_A * V175,
-                        coste_a + Patminus5_A * V16 + Pat_A * V165 + Patplus5_A * V17)
+        V165_new = min( coste_e + float(matriz[3][1]) * V16 + float(matriz[3][2]) * V165 + float(matriz[3][3]) * V17 + float(matriz[3][4]) * V175,
+                        coste_a + float(matriz[4][1]) * V16 + float(matriz[4][2]) * V165 + float(matriz[4][3]) * V17)
         print("V165", V165_new)
 
-        V17_new = min( coste_e + Petminus5_A * V165 + Pet_A * V17 + Petplus5_A * V175 + Petplus1_A * V18,
-                       coste_a + Patminus5_A * V165 + Pat_A * V17 + Patplus5_A * V175)
+        V17_new = min( coste_e + float(matriz[5][2]) * V165 + float(matriz[5][3]) * V17 + float(matriz[5][4]) * V175 + float(matriz[5][5]) * V18,
+                       coste_a + float(matriz[6][2]) * V165 + float(matriz[6][3]) * V17 + float(matriz[6][4]) * V175)
         print("V17", V17_new)
 
-        V175_new = min( coste_e + Petminus5_A * V17 + Pet_A * V175 + Petplus5_A * V18 + Petplus1_A * V185,
-                        coste_a + Patminus5_A * V17 + Pat_A * V175 + Patplus5_A * V18)
+        V175_new = min( coste_e + float(matriz[7][3]) * V17 + float(matriz[7][4]) * V175 + float(matriz[7][5]) * V18 + float(matriz[7][6]) * V185,
+                        coste_a + float(matriz[8][3]) * V17 + float(matriz[8][4]) * V175 + float(matriz[8][5]) * V18)
         print("V175", V175_new)
 
-        V18_new = min( coste_e + Petminus5_A * V175 + Pet_A * V18 + Petplus5_A * V185 + Petplus1_A * V19,
-                       coste_a + Patminus5_A * V175 + Pat_A * V18 + Patplus5_A * V185)
+        V18_new = min( coste_e + float(matriz[9][4]) * V175 + float(matriz[9][5]) * V18 + float(matriz[9][6]) * V185 + float(matriz[9][7]) * V19,
+                       coste_a + float(matriz[10][4]) * V175 + float(matriz[10][5]) * V18 + float(matriz[10][6]) * V185)
         print("V18", V18_new)
 
-        V185_new = min( coste_e + Petminus5_A * V18 + Pet_A * V185 + Petplus5_A * V19 + Petplus1_A * V195,
-                        coste_a + Patminus5_A * V18 + Pat_A * V185 + Patplus5_A * V19)
+        V185_new = min( coste_e + float(matriz[11][5]) * V18 + float(matriz[11][6])* V185 + float(matriz[11][7]) * V19 + float(matriz[11][8]) * V195,
+                        coste_a + float(matriz[12][5]) * V18 + float(matriz[12][6]) * V185 + float(matriz[12][7]) * V19)
         print("V185", V185_new)
 
-        V19_new = min( coste_e + Petminus5_A * V185 + Pet_A * V19 + Petplus5_A * V195 + Petplus1_A * V20,
-                       coste_a + Patminus5_A * V185 + Pat_A * V19 + Patplus5_A * V195)
+        V19_new = min( coste_e + float(matriz[13][6]) * V185 + float(matriz[13][7]) * V19 + float(matriz[13][8]) * V195 + float(matriz[13][9]) * V20,
+                       coste_a + float(matriz[14][6]) * V185 + float(matriz[14][7]) * V19 + float(matriz[14][8]) * V195)
         print("V19", V19_new)
 
-        V195_new = min( coste_e + Petminus5_A * V19 + Pet_A * V195 + Petplus5_A * V20 + Petplus1_A * V205,
-                        coste_a + Patminus5_A * V19 + Pat_A * V195 + Patplus5_A * V20)
+        V195_new = min( coste_e + float(matriz[15][8]) * V19 + float(matriz[15][9]) * V195 + float(matriz[15][10]) * V20 + float(matriz[15][11]) * V205,
+                        coste_a + float(matriz[16][8]) * V19 + float(matriz[16][9]) * V195 + float(matriz[16][10]) * V20)
         print("V195", V195_new)
 
-        V20_new = min(coste_e + Petminus5_A * V195 + Pet_A * V20 + Petplus5_A * V205 + Petplus1_A * V21,
-                       coste_a + Patminus5_A * V195 + Pat_A * V20 + Patplus5_A * V205)
+        V20_new = min( coste_e + float(matriz[17][9]) * V195 + float(matriz[17][10]) * V20 + float(matriz[17][10]) * V205 + float(matriz[17][11]) * V21,
+                       coste_a + float(matriz[18][9]) * V195 + float(matriz[18][10]) * V20 + float(matriz[18][10]) * V205)
         print("V20", V20_new)
 
-        V205_new = min( coste_e + Petminus5_A * V20 + Pet_A * V205 + Petplus5_A * V21 + Petplus1_A * V215,
-                        coste_a + Patminus5_A * V20 + Pat_A * V205 + Patplus5_A * V21)
+        V205_new = min( coste_e + float(matriz[19][9]) * V20 + float(matriz[19][10]) * V205 + float(matriz[19][11]) * V21 + float(matriz[19][12]) * V215,
+                        coste_a + float(matriz[20][9]) * V20 + float(matriz[20][10]) * V205 + float(matriz[20][11]) * V21)
         print("V205", V205_new)
 
-        V21_new = min( coste_e + Petminus5_A * V205 + Pet_A * V21 + Petplus5_A * V215 + Petplus1_A * V22,
-                       coste_a + Patminus5_A * V205 + Pat_A * V21 + Patplus5_A * V215)
+        V21_new = min( coste_e + float(matriz[21][10]) * V205 + float(matriz[21][11]) * V21 + float(matriz[21][12]) * V215 + float(matriz[21][13]) * V22,
+                       coste_a + float(matriz[22][10]) * V205 + float(matriz[22][11]) * V21 + float(matriz[22][12]) * V215)
         print("V21", V21_new)
 
-        V215_new = min( coste_e + Petminus5_A * V21 + Pet_A * V215 + Petplus5_A * V22 + Petplus1_A * V225,
-                        coste_a + Patminus5_A * V21 + Pat_A * V215 + Patplus5_A * V22)
+        V215_new = min( coste_e + float(matriz[23][11]) * V21 + float(matriz[23][12]) * V215 + float(matriz[23][13]) * V22 + float(matriz[23][14]) * V225,
+                        coste_a + float(matriz[24][11]) * V21 + float(matriz[24][12]) * V215 + float(matriz[24][13]) * V22)
         print("V215", V215_new)
 
-        V225_new = min( coste_e + Petminus5_A * V22 + Pet_A * V225 + Petplus5_A * V23 + Petplus1_A * V235,
-                        coste_a + Patminus5_A * V22 + Pat_A * V225 + Patplus5_A * V23)
+        V225_new = min(
+            coste_e + float(matriz[27][13]) * V22 + float(matriz[27][14]) * V225 + float(matriz[27][15]) * V23 + float(matriz[27][16]) * V235,
+            coste_a + float(matriz[28][13]) * V22 + float(matriz[28][14]) * V225 + float(matriz[28][15]) * V23)
         print("V225", V225_new)
 
-        V23_new = min( coste_e + Petminus5_A * V225 + Pet_A * V23 + Petplus5_A * V235 + Petplus1_A * V24,
-                       coste_a + Patminus5_A * V225 + Pat_A * V23 + Patplus5_A * V235)
+        V23_new = min(
+            coste_e + float(matriz[29][14]) * V225 + float(matriz[29][15]) * V23 + float(matriz[29][16]) * V235 + float(
+                matriz[29][17]) * V24,
+            coste_a + float(matriz[30][14]) * V225 + float(matriz[30][15]) * V23 + float(matriz[30][16]) * V235)
         print("V23", V23_new)
 
-        V235_new = min( coste_e + Petminus5_A * V23 + Pet_A * V235 + Petplus5_A * V24 + Petplus1_A * V245,
-                        coste_a + Patminus5_A * V23 + Pat_A * V235 + Patplus5_A * V24)
+        V235_new = min(
+            coste_e + float(matriz[31][15]) * V23 + float(matriz[31][16]) * V235 + float(matriz[31][17]) * V24 + float(
+                matriz[31][18]) * V245,
+            coste_a + float(matriz[32][15]) * V23 + float(matriz[32][16]) * V235 + float(matriz[32][17]) * V24)
         print("V235", V235_new)
 
-        V24_new = min( coste_e + Petminus5_A * V235 + Pet_A * V24 + Petplus5_A * V245 + Petplus1_A * V25,
-                       coste_a + Patminus5_A * V235 + Pat_A * V24 + Patplus5_A * V245)
+        V24_new = min(
+            coste_e + float(matriz[33][16]) * V235 + float(matriz[33][17]) * V24 + float(matriz[33][18]) * V245 + float(
+                matriz[33][19]) * V25,
+            coste_a + float(matriz[34][16]) * V235 + float(matriz[34][17]) * V24 + float(matriz[34][18]) * V245)
         print("V24", V24_new)
 
-        V245_new = min( coste_e + Pe25_245 * V25 + Pe245_245 * V245 + Pe24_245 * V24,
-                        coste_a + Pa25_245 * V25 + Pa245_245 * V245 + Pa24_245 * V24)
+        V245_new = min(
+            coste_e + float(matriz[35][19]) * V25 + float(matriz[35][18]) * V245 + float(matriz[35][17]) * V24,
+            coste_a + float(matriz[36][19]) * V25 + float(matriz[36][18]) * V245 + float(matriz[36][17]) * V24)
         print("V245", V245_new)
 
-
-        V25_new = min( coste_e + Pe25_25 * V25 + Pe245_25 * V245, coste_a + Pa25_25 * V25 + Pa245_25 * V245)
+        V25_new = min(coste_e + float(matriz[37][19]) * V25 + float(matriz[37][18]) * V245,
+                      coste_a + float(matriz[38][19]) * V25 + float(matriz[38][18]) * V245)
         print("V25", V25_new)
 
 
@@ -231,6 +253,7 @@ def ecuaciones_bellman():
         V25 = V25_new
 
         iteracion += 1
+        print("iteracion valores",iteracion)
     valores = {"16.0": V16, "16.5" : V165, "17.0": V17, "17.5" : V175, "18.0": V18, "18.5": V185, "19.0" : V19, "19.5": V195, "20.0": V20,
                 "20.5": V205, "21.0": V21, "21.5" : V215, "22.0": 0, "22.5": V225, "23.0" : V23, "23.5": V235, "24.0": V24, "24.5" : V245, "25.0" : V25}
 
