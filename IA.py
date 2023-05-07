@@ -142,12 +142,12 @@ def ecuaciones_bellman():
                        coste_a + float(matriz[14][6]) * V185 + float(matriz[14][7]) * V19 + float(matriz[14][8]) * V195)
         print("V19", V19_new)
 
-        V195_new = min( coste_e + float(matriz[15][8]) * V19 + float(matriz[15][9]) * V195 + float(matriz[15][10]) * V20 + float(matriz[15][11]) * V205,
-                        coste_a + float(matriz[16][8]) * V19 + float(matriz[16][9]) * V195 + float(matriz[16][10]) * V20)
+        V195_new = min( coste_e + float(matriz[15][7]) * V19 + float(matriz[15][8]) * V195 + float(matriz[15][9]) * V20 + float(matriz[15][11]) * V205,
+                        coste_a + float(matriz[16][7]) * V19 + float(matriz[16][8]) * V195 + float(matriz[16][9]) * V20)
         print("V195", V195_new)
 
-        V20_new = min( coste_e + float(matriz[17][9]) * V195 + float(matriz[17][10]) * V20 + float(matriz[17][10]) * V205 + float(matriz[17][11]) * V21,
-                       coste_a + float(matriz[18][9]) * V195 + float(matriz[18][10]) * V20 + float(matriz[18][10]) * V205)
+        V20_new = min( coste_e + float(matriz[17][8]) * V195 + float(matriz[17][9]) * V20 + float(matriz[17][10]) * V205 + float(matriz[17][11]) * V21,
+                       coste_a + float(matriz[18][8]) * V195 + float(matriz[18][9]) * V20 + float(matriz[18][10]) * V205)
         print("V20", V20_new)
 
         V205_new = min( coste_e + float(matriz[19][9]) * V20 + float(matriz[19][10]) * V205 + float(matriz[19][11]) * V21 + float(matriz[19][12]) * V215,
@@ -223,45 +223,6 @@ def ecuaciones_bellman():
 
 
 def politica_optima(coste_a, coste_e, valores):
-    # Probabilidades A (t entre 16,5 y 24)
-
-    Pet_A = 0.1
-    Petminus5_A = 0.2
-    Petplus5_A = 0.5
-    Petplus1_A = 0.2
-
-    Pat_A = 0.2
-    Patminus5_A = 0.7
-    Patplus5_A = 0.1
-    Patplus1_A = 0
-
-    # Probabilidades B(t=16)
-
-    Pe16_16 = 0.3
-    Pe165_16 = 0.5
-    Pe17_16 = 0.2
-
-    Pa16_16 = 0.9
-    Pa165_16 = 0.1
-    Pa17_16 = 0
-
-    # Probabilidades C(t=24.5)
-
-    Pe24_245 = 0.1
-    Pe245_245 = 0.2
-    Pe25_245 = 0.7
-
-    Pa24_245 = Patminus5_A
-    Pa245_245 = Pat_A
-    Pa25_245 = Patplus5_A
-
-    # Probabilidades D(t=25)
-
-    Pe245_25 = 0.1
-    Pe25_25 = 0.9
-
-    Pa245_25 = 0.7
-    Pa25_25 = 0.3
 
     diccionario = {"16.0": None, "16.5": None, "17.0": None, "17.5": None, "18.0": None, "18.5": None, "19.0": None,
                    "19.5": None, "20.0": None,
@@ -331,19 +292,19 @@ def politica_optima(coste_a, coste_e, valores):
     else:
         diccionario["19.0"] = False
 
-    V195e = coste_e + float(matriz[15][8]) * valores["19.0"] + float(matriz[15][9]) * valores["19.5"] + float(
-        matriz[15][10]) * valores["20.0"] + float(matriz[15][11]) * valores["20.5"]
-    V195a = coste_a + float(matriz[16][8]) * valores["19.0"] + float(matriz[16][9]) * valores["19.5"] + float(
-        matriz[16][10]) * valores["20.0"]
+    V195e = coste_e + float(matriz[15][7]) * valores["19.0"] + float(matriz[15][8]) * valores["19.5"] + float(
+        matriz[15][9]) * valores["20.0"] + float(matriz[15][10]) * valores["20.5"]
+    V195a = coste_a + float(matriz[16][7]) * valores["19.0"] + float(matriz[16][8]) * valores["19.5"] + float(
+        matriz[16][9]) * valores["20.0"]
     if V195e < V195a:
         diccionario["19.5"] = True
     else:
         diccionario["19.5"] = False
 
-    V20e = coste_e + float(matriz[17][9]) * valores["19.5"] + float(matriz[17][10]) * valores["20.0"] + float(
-        matriz[17][11]) * valores["20.5"] + float(matriz[17][11]) * valores["21.0"]
-    V20a = coste_a + float(matriz[18][9]) * valores["19.5"] + float(matriz[18][10]) * valores["20.0"] + float(
-        matriz[18][11]) * valores["20.5"]
+    V20e = coste_e + float(matriz[17][8]) * valores["19.5"] + float(matriz[17][9]) * valores["20.0"] + float(
+        matriz[17][10]) * valores["20.5"] + float(matriz[17][11]) * valores["21.0"]
+    V20a = coste_a + float(matriz[18][8]) * valores["19.5"] + float(matriz[18][9]) * valores["20.0"] + float(
+        matriz[18][10]) * valores["20.5"]
     if V20e < V20a:
         diccionario["20.0"] = True
     else:
