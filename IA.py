@@ -81,11 +81,12 @@ def politica_optima():
 
     coste_e = 2
     coste_a = 1
-    V22 = 0
+
     if coste_a < coste_e:
         costemin = coste_a
     else:
         costemin = coste_e
+    V22 = 0
     V16 = V165 = V17 = V175 = V18 = V185 = V19 = V195 = V20 = V205 = V21 = V215 = V225 = V23 = V235 = V24 = V245 = V25 = costemin
 
     # Probabilidades A (t entre 16,5 y 24)
@@ -106,9 +107,9 @@ def politica_optima():
     Pe165_16 = 0.5
     Pe17_16 = 0.2
 
-    Pa16_16 = 0.3
-    Pa165_16 = 0.5
-    Pa17_16 = 0.2
+    Pa16_16 = 0.9
+    Pa165_16 = 0.1
+    Pa17_16 = 0
 
 
     # Probabilidades C(t=24.5)
