@@ -133,11 +133,11 @@ def politica_optima():
     iteracion = 1
     aux = 0
 
-    while V16 - aux > 0.00001 and iteracion < 10000:
+    while V16 - aux > 0.01:
 
         aux = V16
         print("Iteración:", iteracion)
-        V16_new = min( coste_e + Pe16_16 * V16 + Pe165_16 * V165 + Pe17_16 * V17,
+        V16_new = min( coste_e + Pe16_16 * V16 + Pe165_16 * V165 + Pe17_16 * V17 ,
                        coste_a + Pa16_16 * V16 + Pa17_16 * V17 + Pa165_16 * V165)
         print("V16", V16_new)
 
