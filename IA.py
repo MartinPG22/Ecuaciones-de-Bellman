@@ -268,127 +268,153 @@ def politica_optima(coste_a, coste_e, valores):
                    "20.5": None, "21.0": None, "21.5": None, "22.5": None, "23.0": None, "23.5": None, "24.0": None,
                    "24.5": None, "25.0": None}
 
-    V16e = coste_e + Pe16_16 * valores["16.0"] + Pe17_16 * valores["17.0"] + Pe165_16 * valores["16.5"]
-    V16a = coste_a + Pa16_16 * valores["16.0"] + Pa17_16 * valores["17.0"] + Pa165_16 * valores["16.5"]
+    V16e = coste_e + float(matriz[1][1]) * valores["16.0"] + float(matriz[1][2]) * valores["17.0"] + float(
+        matriz[1][3]) * valores["16.5"]
+    V16a = coste_a + float(matriz[2][1]) * valores["16.0"] + float(matriz[2][2]) * valores["17.0"] + float(
+        matriz[2][3]) * valores["16.5"]
     if V16e < V16a:
         diccionario["16.0"] = True
     else:
         diccionario["16.0"] = False
 
-    V165e = coste_e + Petminus5_A * valores["16.0"] + Pet_A * valores["16.5"] + Petplus5_A * valores["17.0"] + Petplus1_A * valores["17.5"]
-    V165a = coste_a + Patminus5_A * valores["16.0"] + Pat_A * valores["16.5"] + Patplus5_A * valores["17.0"]
+    V165e = coste_e + float(matriz[3][1]) * valores["16.0"] + float(matriz[3][2]) * valores["16.5"] + float(
+        matriz[3][3]) * valores["17.0"] + float(matriz[3][4]) * valores["17.5"]
+    V165a = coste_a + float(matriz[4][1]) * valores["16.0"] + float(matriz[4][2]) * valores["16.5"] + float(
+        matriz[4][3]) * valores["17.0"]
     if V165e < V165a:
         diccionario["16.5"] = True
     else:
         diccionario["16.5"] = False
 
-    V17e = coste_e + Petminus5_A * valores["16.5"] + Pet_A * valores["17.0"] + Petplus5_A * valores["17.5"] + Petplus1_A * valores["18.0"]
-    V17a = coste_a + Patminus5_A * valores["16.5"] + Pat_A * valores["17.0"] + Patplus5_A * valores["17.5"]
+    V17e = coste_e + float(matriz[5][2]) * valores["16.5"] + float(matriz[5][3]) * valores["17.0"] + float(
+        matriz[5][4]) * valores["17.5"] + float(matriz[5][5]) * valores["18.0"]
+    V17a = coste_a + float(matriz[6][2]) * valores["16.5"] + float(matriz[6][3]) * valores["17.0"] + float(
+        matriz[6][3]) * valores["17.5"]
     if V17e < V17a:
         diccionario["17.0"] = True
     else:
         diccionario["17.0"] = False
 
-    V175e = coste_e + Petminus5_A * valores["17.0"] + Pet_A * valores["17.5"] + Petplus5_A * valores["18.0"] + Petplus1_A * valores["18.5"]
-    V175a = coste_a + Patminus5_A * valores["17.0"] + Pat_A * valores["17.5"] + Patplus5_A * valores["18.0"]
+    V175e = coste_e + float(matriz[7][3]) * valores["17.0"] + float(matriz[7][4]) * valores["17.5"] + float(
+        matriz[7][5]) * valores["18.0"] + float(matriz[7][6]) * valores["18.5"]
+    V175a = coste_a + float(matriz[8][3]) * valores["17.0"] + float(matriz[8][4]) * valores["17.5"] + float(
+        matriz[8][5]) * valores["18.0"]
     if V175e < V175a:
         diccionario["17.5"] = True
     else:
         diccionario["17.5"] = False
 
-    V18e = coste_e + Petminus5_A * valores["17.5"] + Pet_A * valores["18.0"] + Petplus5_A * valores["18.5"] + Petplus1_A * valores["19.0"]
-    V18a = coste_a + Patminus5_A * valores["17.5"] + Pat_A * valores["18.0"] + Patplus5_A * valores["18.5"]
+    V18e = coste_e + float(matriz[9][4]) * valores["17.5"] + float(matriz[9][5]) * valores["18.0"] + float(
+        matriz[9][6]) * valores["18.5"] + float(matriz[9][7]) * valores["19.0"]
+    V18a = coste_a + float(matriz[10][4]) * valores["17.5"] + float(matriz[10][5]) * valores["18.0"] + float(
+        matriz[10][6]) * valores["18.5"]
     if V18e < V18a:
         diccionario["18.0"] = True
     else:
         diccionario["18.0"] = False
 
-    V185e = coste_e + Petminus5_A * valores["18.0"] + Pet_A * valores["18.5"] + Petplus5_A * valores["19.0"] + Petplus1_A * valores["19.5"]
-    V185a = coste_a + Patminus5_A * valores["18.0"] + Pat_A * valores["18.5"] + Patplus5_A * valores["19.0"]
+    V185e = coste_e + float(matriz[11][5]) * valores["18.0"] + float(matriz[11][6]) * valores["18.5"] + float(
+        matriz[11][7]) * valores["19.0"] + float(matriz[11][8]) * valores["19.5"]
+    V185a = coste_a + float(matriz[12][5]) * valores["18.0"] + float(matriz[12][6]) * valores["18.5"] + float(
+        matriz[12][7]) * valores["19.0"]
     if V185e < V185a:
         diccionario["18.5"] = True
     else:
         diccionario["18.5"] = False
 
-    V19e = coste_e + Petminus5_A * valores["18.5"] + Pet_A * valores["19.0"] + Petplus5_A * valores["19.5"] + Petplus1_A * valores["20.0"]
-    V19a = coste_a + Patminus5_A * valores["18.5"] + Pat_A * valores["19.0"] + Patplus5_A * valores["19.5"]
+    V19e = coste_e + float(matriz[13][6]) * valores["18.5"] + float(matriz[13][7]) * valores["19.0"] + float(
+        matriz[13][8]) * valores["19.5"] + float(matriz[13][9]) * valores["20.0"]
+    V19a = coste_a + float(matriz[14][6]) * valores["18.5"] + float(matriz[14][7]) * valores["19.0"] + float(
+        matriz[14][8]) * valores["19.5"]
     if V19e < V19a:
         diccionario["19.0"] = True
     else:
         diccionario["19.0"] = False
 
-    V195e = coste_e + Petminus5_A * valores["19.0"] + Pet_A * valores["19.5"] + Petplus5_A * valores["20.0"] + Petplus1_A * valores["20.5"]
-    V195a = coste_a + Patminus5_A * valores["19.0"] + Pat_A * valores["19.5"] + Patplus5_A * valores["20.0"]
+    V195e = coste_e + float(matriz[15][8]) * valores["19.0"] + float(matriz[15][9]) * valores["19.5"] + float(
+        matriz[15][10]) * valores["20.0"] + float(matriz[15][11]) * valores["20.5"]
+    V195a = coste_a + float(matriz[16][8]) * valores["19.0"] + float(matriz[16][9]) * valores["19.5"] + float(
+        matriz[16][10]) * valores["20.0"]
     if V195e < V195a:
         diccionario["19.5"] = True
     else:
         diccionario["19.5"] = False
 
-    V20e = coste_e + Petminus5_A * valores["19.5"] + Pet_A * valores["20.0"] + Petplus5_A * valores["20.5"] + Petplus1_A * valores["21.0"]
-    V20a = coste_a + Patminus5_A * valores["19.5"] + Pat_A * valores["20.0"] + Patplus5_A * valores["20.5"]
+    V20e = coste_e + float(matriz[17][9]) * valores["19.5"] + float(matriz[17][10]) * valores["20.0"] + float(
+        matriz[17][11]) * valores["20.5"] + float(matriz[17][11]) * valores["21.0"]
+    V20a = coste_a + float(matriz[18][9]) * valores["19.5"] + float(matriz[18][10]) * valores["20.0"] + float(
+        matriz[18][11]) * valores["20.5"]
     if V20e < V20a:
         diccionario["20.0"] = True
     else:
         diccionario["20.0"] = False
 
-    V205e = coste_e + Petminus5_A * valores["20.0"] + Pet_A * valores["20.5"] + Petplus5_A * valores["21.0"] + Petplus1_A * valores["21.5"]
-    V205a = coste_a + Patminus5_A * valores["20.0"] + Pat_A * valores["20.5"] + Patplus5_A * valores["21.0"]
+    V205e = coste_e + float(matriz[19][9]) * valores["20.0"] + float(matriz[19][10]) * valores["20.5"] +\
+            float(matriz[19][11]) * valores["21.0"] + float(matriz[19][12]) * valores["21.5"]
+    V205a = coste_a + float(matriz[20][9]) * valores["20.0"] + float(matriz[20][10]) * valores["20.5"] + float(matriz[20][11]) * valores["21.0"]
     if V205e < V205a:
         diccionario["20.5"] = True
     else:
         diccionario["20.5"] = False
 
-    V21e = coste_e + Petminus5_A * valores["20.5"] + Pet_A * valores["21.0"] + Petplus5_A * valores["21.5"] + Petplus1_A * valores["22.0"]
-    V21a = coste_a + Patminus5_A * valores["20.5"] + Pat_A * valores["21.0"] + Patplus5_A * valores["21.5"]
+    V21e = coste_e + float(matriz[21][10]) * valores["20.5"] + float(matriz[21][11]) * valores["21.0"] +\
+           float(matriz[21][12]) * valores["21.5"] + float(matriz[21][13]) * valores["22.0"]
+    V21a = coste_a + float(matriz[22][10]) * valores["20.5"] + float(matriz[22][11])* valores["21.0"] + float(matriz[22][12]) * valores["21.5"]
     if V21e < V21a:
         diccionario["21.0"] = True
     else:
         diccionario["21.0"] = False
 
-    V215e = coste_e + Petminus5_A * valores["21.0"] + Pet_A * valores["21.5"] + Petplus5_A * valores["22.0"] + Petplus1_A * valores["22.5"]
-    V215a = coste_a + Patminus5_A * valores["21.0"] + Pat_A * valores["21.5"] + Patplus5_A * valores["22.0"]
+    V215e = coste_e + float(matriz[23][11]) * valores["21.0"] + float(matriz[23][12]) * valores["21.5"] +\
+            float(matriz[23][13]) * valores["22.0"] + float(matriz[23][14]) * valores["22.5"]
+    V215a = coste_a + float(matriz[24][11]) * valores["21.0"] + float(matriz[24][12]) * valores["21.5"] + float(matriz[24][13]) * valores["22.0"]
     if V215e < V215a:
         diccionario["21.5"] = True
     else:
         diccionario["21.5"] = False
 
-    V225e = coste_e + Petminus5_A * valores["22.0"] + Pet_A * valores["22.5"] + Petplus5_A * valores["23.0"] + Petplus1_A * valores["23.5"]
-    V225a = coste_a + Patminus5_A * valores["22.0"] + Pat_A * valores["22.5"] + Patplus5_A * valores["23.0"]
+    V225e = coste_e + float(matriz[27][13]) * valores["22.0"] + float(matriz[27][14]) * valores["22.5"] +\
+            float(matriz[27][15]) * valores["23.0"] + float(matriz[27][16]) * valores["23.5"]
+    V225a = coste_a + float(matriz[28][13]) * valores["22.0"] + float(matriz[28][14]) * valores["22.5"] + float(matriz[28][15]) * valores["23.0"]
     if V225e < V225a:
         diccionario["22.5"] = True
     else:
         diccionario["22.5"] = True
 
-    V23e = coste_e + Petminus5_A * valores["22.5"] + Pet_A * valores["23.0"] + Petplus5_A * valores["23.5"] + Petplus1_A * valores["24.0"]
-    V23a = coste_a + Patminus5_A * valores["22.5"] + Pat_A * valores["23.0"] + Patplus5_A * valores["23.5"]
+    V23e = coste_e + float(matriz[29][14]) * valores["22.5"] + float(matriz[29][15]) * valores["23.0"] +\
+           float(matriz[29][16]) * valores["23.5"] + float(matriz[29][17]) * valores["24.0"]
+    V23a = coste_a + float(matriz[30][14]) * valores["22.5"] + float(matriz[30][15]) * valores["23.0"] + float(matriz[30][16]) * valores["23.5"]
     if V23e < V23a:
         diccionario["23.0"] = True
     else:
         diccionario["23.0"] = False
 
-    V235e = coste_e + Petminus5_A * valores["23.0"] + Pet_A * valores["23.5"] + Petplus5_A * valores["24.0"] + Petplus1_A * valores["24.5"]
-    V235a = coste_a + Patminus5_A * valores["23.0"] + Pat_A * valores["23.5"] + Patplus5_A * valores["24.0"]
+    V235e = coste_e + float(matriz[31][15]) * valores["23.0"] + float(matriz[31][16]) * valores["23.5"]\
+            + float(matriz[31][17]) * valores["24.0"] + float(matriz[31][18]) * valores["24.5"]
+    V235a = coste_a + float(matriz[32][15]) * valores["23.0"] + float(matriz[32][16]) * valores["23.5"] + float(matriz[32][17]) * valores["24.0"]
     if V235e < V235a:
         diccionario["23.5"] = True
     else:
         diccionario["23.5"] = False
 
-    V24e = coste_e + Petminus5_A * valores["23.5"] + Pet_A * valores["24.0"] + Petplus5_A * valores["24.5"] + Petplus1_A * valores["25.0"]
-    V24a = coste_a + Patminus5_A * valores["23.5"] + Pat_A * valores["24.0"] + Patplus5_A * valores["24.5"]
+    V24e = coste_e + float(matriz[33][16]) * valores["23.5"] + float(matriz[33][17]) * valores["24.0"]\
+           + float(matriz[33][18]) * valores["24.5"] + float(matriz[33][19]) * valores["25.0"]
+    V24a = coste_a + float(matriz[34][16]) * valores["23.5"] + float(matriz[34][17]) * valores["24.0"] + float(matriz[34][18]) * valores["24.5"]
     if V24e < V24a:
         diccionario["24.0"] = True
     else:
         diccionario["24.0"] = False
 
-    V245e = coste_e + Pe25_245 * valores["25.0"] + Pe245_245 * valores["24.5"] + Pe24_245 * valores["24.0"]
-    V245a = coste_a + Pa25_245 * valores["25.0"] + Pa245_245 * valores["24.5"] + Pa24_245 * valores["24.0"]
+    V245e = coste_e + float(matriz[35][19]) * valores["25.0"] + float(matriz[35][18]) * valores["24.5"] + float(matriz[35][17]) * valores["24.0"]
+    V245a = coste_a + float(matriz[36][19]) * valores["25.0"] + float(matriz[36][18]) * valores["24.5"] + float(matriz[36][17]) * valores["24.0"]
     if V245e < V245a:
         diccionario["24.5"] = True
     else:
         diccionario["24.5"] = False
 
-    V25e = coste_e + Pe25_25 * valores["25.0"] + Pe245_25 * valores["24.5"]
-    V25a = coste_a + Pa25_25 * valores["25.0"] + Pa245_25 * valores["24.5"]
+    V25e = coste_e + float(matriz[37][19]) * valores["25.0"] + float(matriz[37][18]) * valores["24.5"]
+    V25a = coste_a + float(matriz[38][19]) * valores["25.0"] + float(matriz[38][18]) * valores["24.5"]
+
     if V25e < V25a:
         diccionario["25.0"] = True
     else:
