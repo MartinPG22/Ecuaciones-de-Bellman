@@ -8,7 +8,8 @@ def control():
     calefaccion_tiempo = 1800
     aux = random.choice(temperaturas)
     iteracion = 0
-    diccionario = politica_optima()
+    diccionario = ecuaciones_bellman()
+
     while aux != 22:
 
         if calefaccion == True:
@@ -63,6 +64,7 @@ def control():
         iteracion += 1
         tiempo += calefaccion_tiempo
         horas = tiempo/3600
+
         print("Temperatura:", aux, "Hora:", horas, "Iteración:", iteracion )
         "dependiendo del aux hay que sacar su politica optima"
 
@@ -75,22 +77,23 @@ def control():
         if diccionario[str(aux)] == True:
             calefaccion = True
 
-def politica_optima():
+def ecuaciones_bellman():
     "Se presupone con la iteración 0 ya esta hecha, por tanto los valores de los estados sera el coste más bajo"
 
     coste_e = 2
     coste_a = 1
-    V22 = 0
+
     if coste_a < coste_e:
         costemin = coste_a
     else:
         costemin = coste_e
+    V22 = 0
     V16 = V165 = V17 = V175 = V18 = V185 = V19 = V195 = V20 = V205 = V21 = V215 = V225 = V23 = V235 = V24 = V245 = V25 = costemin
 
     # Probabilidades A (t entre 16,5 y 24)
 
     Pet_A = 0.1
-    Petminus5_A = 0.1
+    Petminus5_A = 0.2
     Petplus5_A = 0.5
     Petplus1_A = 0.2
 
@@ -105,9 +108,9 @@ def politica_optima():
     Pe165_16 = 0.5
     Pe17_16 = 0.2
 
-    Pa16_16 = 0.3
-    Pa165_16 = 0.5
-    Pa17_16 = 0.2
+    Pa16_16 = 0.9
+    Pa165_16 = 0.1
+    Pa17_16 = 0
 
 
     # Probabilidades C(t=24.5)
@@ -132,7 +135,7 @@ def politica_optima():
     iteracion = 1
     aux = 0
 
-    while V16 - aux > 0.00001 and iteracion<10000:
+    while V16 - aux > 0.01:
 
         aux = V16
         print("Iteración:", iteracion)
@@ -228,155 +231,149 @@ def politica_optima():
         V25 = V25_new
 
         iteracion += 1
+    valores = {"16.0": V16, "16.5" : V165, "17.0": V17, "17.5" : V175, "18.0": V18, "18.5": V185, "19.0" : V19, "19.5": V195, "20.0": V20,
+                "20.5": V205, "21.0": V21, "21.5" : V215, "22.0": 0, "22.5": V225, "23.0" : V23, "23.5": V235, "24.0": V24, "24.5" : V245, "25.0" : V25}
 
-    diccionario = {"16.0": None, "16.5" : None, "17.0": None, "17.5" : None, "18.0": None, "18.5": None, "19.0" : None, "19.5": None, "20.0": None,
-                   "20.5": None, "21.0": None, "21.5" : None, "22.5": None, "23.0" : None, "23.5": None, "24.0": None, "24.5" : None, "25.0" : None}
-    V16e = coste_e + Pe16_16 * V16 + Pe17_16 * V17 + Pe165_16 * V165
-    V16a = coste_a + Pa16_16 * V16 + Pa17_16 * V17 + Pa165_16 * V165
+    return politica_optima(Pa165_16, Pa16_16, Pa17_16, Pa245_245, Pa245_25, Pa24_245, Pa25_245, Pa25_25, Pat_A, Patminus5_A,
+                       Patplus5_A, Pe165_16, Pe16_16, Pe17_16, Pe245_245, Pe245_25, Pe24_245, Pe25_245, Pe25_25, Pet_A,
+                       Petminus5_A, Petplus1_A, Petplus5_A, coste_a, coste_e, valores)
 
+
+
+def politica_optima(Pa165_16, Pa16_16, Pa17_16, Pa245_245, Pa245_25, Pa24_245, Pa25_245, Pa25_25, Pat_A, Patminus5_A,
+                Patplus5_A, Pe165_16, Pe16_16, Pe17_16, Pe245_245, Pe245_25, Pe24_245, Pe25_245, Pe25_25, Pet_A,
+                Petminus5_A, Petplus1_A, Petplus5_A, coste_a, coste_e, valores):
+
+    diccionario = {"16.0": None, "16.5": None, "17.0": None, "17.5": None, "18.0": None, "18.5": None, "19.0": None,
+                   "19.5": None, "20.0": None,
+                   "20.5": None, "21.0": None, "21.5": None, "22.5": None, "23.0": None, "23.5": None, "24.0": None,
+                   "24.5": None, "25.0": None}
+
+    V16e = coste_e + Pe16_16 * valores["16.0"] + Pe17_16 * valores["17.0"] + Pe165_16 * valores["16.5"]
+    V16a = coste_a + Pa16_16 * valores["16.0"] + Pa17_16 * valores["17.0"] + Pa165_16 * valores["16.5"]
     if V16e < V16a:
         diccionario["16.0"] = True
     else:
         diccionario["16.0"] = False
 
-    V165e = coste_e + Petminus5_A * V16 + Pet_A * V165 + Petplus5_A * V17 + Petplus1_A * V175
-    V165a = coste_a + Patminus5_A * V16 + Pat_A * V165 + Patplus5_A * V17
-
-
+    V165e = coste_e + Petminus5_A * valores["16.0"] + Pet_A * valores["16.5"] + Petplus5_A * valores["17.0"] + Petplus1_A * valores["17.5"]
+    V165a = coste_a + Patminus5_A * valores["16.0"] + Pat_A * valores["16.5"] + Patplus5_A * valores["17.0"]
     if V165e < V165a:
         diccionario["16.5"] = True
     else:
         diccionario["16.5"] = False
 
-    V17e = coste_e + Petminus5_A * V165 + Pet_A * V17 + Petplus5_A * V175 + Petplus1_A * V18
-    V17a = coste_a + Patminus5_A * V165 + Pat_A * V17 + Patplus5_A * V175
-
-
+    V17e = coste_e + Petminus5_A * valores["16.5"] + Pet_A * valores["17.0"] + Petplus5_A * valores["17.5"] + Petplus1_A * valores["18.0"]
+    V17a = coste_a + Patminus5_A * valores["16.5"] + Pat_A * valores["17.0"] + Patplus5_A * valores["17.5"]
     if V17e < V17a:
         diccionario["17.0"] = True
     else:
         diccionario["17.0"] = False
 
-    V175e = coste_e + Petminus5_A * V17 + Pet_A * V175 + Petplus5_A * V18 + Petplus1_A * V185
-    V175a = coste_a + Patminus5_A * V17 + Pat_A * V175 + Patplus5_A * V18
-
+    V175e = coste_e + Petminus5_A * valores["17.0"] + Pet_A * valores["17.5"] + Petplus5_A * valores["18.0"] + Petplus1_A * valores["18.5"]
+    V175a = coste_a + Patminus5_A * valores["17.0"] + Pat_A * valores["17.5"] + Patplus5_A * valores["18.0"]
     if V175e < V175a:
         diccionario["17.5"] = True
     else:
         diccionario["17.5"] = False
 
-    V18e = coste_e + Petminus5_A * V175 + Pet_A * V18 + Petplus5_A * V185 + Petplus1_A * V19
-    V18a = coste_a + Patminus5_A * V175 + Pat_A * V18 + Patplus5_A * V185
-
+    V18e = coste_e + Petminus5_A * valores["17.5"] + Pet_A * valores["18.0"] + Petplus5_A * valores["18.5"] + Petplus1_A * valores["19.0"]
+    V18a = coste_a + Patminus5_A * valores["17.5"] + Pat_A * valores["18.0"] + Patplus5_A * valores["18.5"]
     if V18e < V18a:
         diccionario["18.0"] = True
     else:
         diccionario["18.0"] = False
 
-    V185e = coste_e + Petminus5_A * V18 + Pet_A * V185 + Petplus5_A * V19 + Petplus1_A * V195
-    V185a = coste_a + Patminus5_A * V18 + Pat_A * V185 + Patplus5_A * V19
-
+    V185e = coste_e + Petminus5_A * valores["18.0"] + Pet_A * valores["18.5"] + Petplus5_A * valores["19.0"] + Petplus1_A * valores["19.5"]
+    V185a = coste_a + Patminus5_A * valores["18.0"] + Pat_A * valores["18.5"] + Patplus5_A * valores["19.0"]
     if V185e < V185a:
         diccionario["18.5"] = True
     else:
         diccionario["18.5"] = False
 
-    V19e = coste_e + Petminus5_A * V185 + Pet_A * V19 + Petplus5_A * V195 + Petplus1_A * V20
-    V19a = coste_a + Patminus5_A * V185 + Pat_A * V19 + Patplus5_A * V195
-
+    V19e = coste_e + Petminus5_A * valores["18.5"] + Pet_A * valores["19.0"] + Petplus5_A * valores["19.5"] + Petplus1_A * valores["20.0"]
+    V19a = coste_a + Patminus5_A * valores["18.5"] + Pat_A * valores["19.0"] + Patplus5_A * valores["19.5"]
     if V19e < V19a:
         diccionario["19.0"] = True
     else:
         diccionario["19.0"] = False
 
-    V195e = coste_e + Petminus5_A * V19 + Pet_A * V195 + Petplus5_A * V20 + Petplus1_A * V205
-    V195a = coste_a + Patminus5_A * V19 + Pat_A * V195 + Patplus5_A * V20
-
+    V195e = coste_e + Petminus5_A * valores["19.0"] + Pet_A * valores["19.5"] + Petplus5_A * valores["20.0"] + Petplus1_A * valores["20.5"]
+    V195a = coste_a + Patminus5_A * valores["19.0"] + Pat_A * valores["19.5"] + Patplus5_A * valores["20.0"]
     if V195e < V195a:
         diccionario["19.5"] = True
     else:
         diccionario["19.5"] = False
 
-    V20e = coste_e + Petminus5_A * V195 + Pet_A * V20 + Petplus5_A * V205 + Petplus1_A * V21
-    V20a = coste_a + Patminus5_A * V195 + Pat_A * V20 + Patplus5_A * V205
-
+    V20e = coste_e + Petminus5_A * valores["19.5"] + Pet_A * valores["20.0"] + Petplus5_A * valores["20.5"] + Petplus1_A * valores["21.0"]
+    V20a = coste_a + Patminus5_A * valores["19.5"] + Pat_A * valores["20.0"] + Patplus5_A * valores["20.5"]
     if V20e < V20a:
         diccionario["20.0"] = True
     else:
         diccionario["20.0"] = False
 
-    V205e = coste_e + Petminus5_A * V20 + Pet_A * V205 + Petplus5_A * V21 + Petplus1_A * V215
-    V205a = coste_a + Patminus5_A * V20 + Pat_A * V205 + Patplus5_A * V21
-
+    V205e = coste_e + Petminus5_A * valores["20.0"] + Pet_A * valores["20.5"] + Petplus5_A * valores["21.0"] + Petplus1_A * valores["21.5"]
+    V205a = coste_a + Patminus5_A * valores["20.0"] + Pat_A * valores["20.5"] + Patplus5_A * valores["21.0"]
     if V205e < V205a:
         diccionario["20.5"] = True
     else:
         diccionario["20.5"] = False
 
-    V21e = coste_e + Petminus5_A * V205 + Pet_A * V21 + Petplus5_A * V215 + Petplus1_A * V22
-    V21a = coste_a + Patminus5_A * V205+ Pat_A * V21 + Patplus5_A * V215
-
+    V21e = coste_e + Petminus5_A * valores["20.5"] + Pet_A * valores["21.0"] + Petplus5_A * valores["21.5"] + Petplus1_A * valores["22.0"]
+    V21a = coste_a + Patminus5_A * valores["20.5"] + Pat_A * valores["21.0"] + Patplus5_A * valores["21.5"]
     if V21e < V21a:
         diccionario["21.0"] = True
     else:
         diccionario["21.0"] = False
 
-    V215e = coste_e + Petminus5_A * V21 + Pet_A * V215 + Petplus5_A * V22 + Petplus1_A * V225
-    V215a = coste_a + Patminus5_A * V21 + Pat_A * V215 + Patplus5_A * V22
-
+    V215e = coste_e + Petminus5_A * valores["21.0"] + Pet_A * valores["21.5"] + Petplus5_A * valores["22.0"] + Petplus1_A * valores["22.5"]
+    V215a = coste_a + Patminus5_A * valores["21.0"] + Pat_A * valores["21.5"] + Patplus5_A * valores["22.0"]
     if V215e < V215a:
         diccionario["21.5"] = True
     else:
         diccionario["21.5"] = False
 
-    V225e = coste_e + Petminus5_A * V22 + Pet_A * V225 + Petplus5_A * V23 + Petplus1_A * V235
-    V225a = coste_a + Patminus5_A * V22 + Pat_A * V225 + Patplus5_A * V23
-
+    V225e = coste_e + Petminus5_A * valores["22.0"] + Pet_A * valores["22.5"] + Petplus5_A * valores["23.0"] + Petplus1_A * valores["23.5"]
+    V225a = coste_a + Patminus5_A * valores["22.0"] + Pat_A * valores["22.5"] + Patplus5_A * valores["23.0"]
     if V225e < V225a:
         diccionario["22.5"] = True
     else:
         diccionario["22.5"] = True
 
-    V23e = coste_e + Petminus5_A * V225 + Pet_A * V23 + Petplus5_A * V235 + Petplus1_A * V24
-    V23a = coste_a + Patminus5_A * V225 + Pat_A * V23 + Patplus5_A * V235
-
+    V23e = coste_e + Petminus5_A * valores["22.5"] + Pet_A * valores["23.0"] + Petplus5_A * valores["23.5"] + Petplus1_A * valores["24.0"]
+    V23a = coste_a + Patminus5_A * valores["22.5"] + Pat_A * valores["23.0"] + Patplus5_A * valores["23.5"]
     if V23e < V23a:
         diccionario["23.0"] = True
     else:
         diccionario["23.0"] = False
 
-    V235e = coste_e + Petminus5_A * V23 + Pet_A * V235 + Petplus5_A * V24 + Petplus1_A * V245
-    V235a = coste_a + Patminus5_A * V23 + Pat_A * V235 + Patplus5_A * V24
-
+    V235e = coste_e + Petminus5_A * valores["23.0"] + Pet_A * valores["23.5"] + Petplus5_A * valores["24.0"] + Petplus1_A * valores["24.5"]
+    V235a = coste_a + Patminus5_A * valores["23.0"] + Pat_A * valores["23.5"] + Patplus5_A * valores["24.0"]
     if V235e < V235a:
         diccionario["23.5"] = True
     else:
         diccionario["23.5"] = False
 
-    V24e = coste_e + Petminus5_A * V235 + Pet_A * V24 + Petplus5_A * V245 + Petplus1_A * V25
-    V24a = coste_a + Patminus5_A * V235 + Pat_A * V24 + Patplus5_A * V245
-
+    V24e = coste_e + Petminus5_A * valores["23.5"] + Pet_A * valores["24.0"] + Petplus5_A * valores["24.5"] + Petplus1_A * valores["25.0"]
+    V24a = coste_a + Patminus5_A * valores["23.5"] + Pat_A * valores["24.0"] + Patplus5_A * valores["24.5"]
     if V24e < V24a:
         diccionario["24.0"] = True
     else:
         diccionario["24.0"] = False
 
-    V245e = coste_e + Pe25_245 * V25 + Pe245_245 * V245 + Pe24_245 * V24
-    V245a = coste_a + Pa25_245 * V25 + Pa245_245 * V245 + Pa24_245 * V24
-
+    V245e = coste_e + Pe25_245 * valores["25.0"] + Pe245_245 * valores["24.5"] + Pe24_245 * valores["24.0"]
+    V245a = coste_a + Pa25_245 * valores["25.0"] + Pa245_245 * valores["24.5"] + Pa24_245 * valores["24.0"]
     if V245e < V245a:
         diccionario["24.5"] = True
     else:
         diccionario["24.5"] = False
 
-    V25e = coste_e + Pe25_25 * V25 + Pe245_25 * V245
-    V25a = coste_a + Pa25_25 * V25 + Pa245_25 * V245
-
+    V25e = coste_e + Pe25_25 * valores["25.0"] + Pe245_25 * valores["24.5"]
+    V25a = coste_a + Pa25_25 * valores["25.0"] + Pa245_25 * valores["24.5"]
     if V25e < V25a:
         diccionario["25.0"] = True
     else:
         diccionario["25.0"] = False
-
     print(diccionario)
     return diccionario
 
