@@ -93,7 +93,7 @@ def ecuaciones_bellman():
     # Probabilidades A (t entre 16,5 y 24)
 
     Pet_A = 0.1
-    Petminus5_A = 0.1
+    Petminus5_A = 0.2
     Petplus5_A = 0.5
     Petplus1_A = 0.2
 
