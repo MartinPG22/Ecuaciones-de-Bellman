@@ -2,9 +2,6 @@ import random
 import csv
 
 
-
-
-
 def control():
     temperaturas = (16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0, 24.5, 25.0)
     calefaccion = False
@@ -13,55 +10,56 @@ def control():
     aux = random.choice(temperaturas)
     iteracion = 0
     diccionario = ecuaciones_bellman()
+    temperatura_objetivo = 22
 
-    while aux != 22:
-
+    while aux != temperatura_objetivo:
+        num = random.random()
         if calefaccion == True:
             if aux == 16:
-                if random.random() < 0.3:
+                if num < 0.3:
                     aux = aux
-                elif random.random() < 0.8:
+                elif num < 0.8:
                     aux += 0.5
                 else:
                     aux += 1
             elif aux == 24.5:
-                if random.random() < 0.1:
+                if num < 0.1:
                     aux -= 0.5
-                elif random.random() < 0.3:
+                elif num < 0.3:
                     aux = aux
                 else:
                     aux += 0.5
             elif aux == 25:
-                if random.random() < 0.1:
+                if num < 0.1:
                     aux -= 0.5
                 else:
                     aux = aux
             else:
-                if random.random() < 0.1:
+                if num < 0.1:
                     aux -= 0.5
-                elif random.random() < 0.3:
+                elif num < 0.3:
                     aux = aux
-                elif random.random() < 0.8:
+                elif num < 0.8:
                     aux += 0.5
                 else:
                     aux += 1
 
         if calefaccion == False:
             if aux == 16:
-                if random.random() < 0.9:
+                if num < 0.9:
                     aux = aux
                 else:
                     aux += 0.5
 
             elif aux == 25:
-                if random.random() < 0.7:
+                if num < 0.7:
                     aux -= 0.5
                 else:
                     aux = aux
             else:
-                if random.random() < 0.7:
+                if num < 0.7:
                     aux -= 0.5
-                elif random.random() < 0.9:
+                elif num < 0.9:
                     aux = aux
                 else:
                     aux += 0.5
