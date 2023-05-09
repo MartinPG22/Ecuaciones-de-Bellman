@@ -1,17 +1,8 @@
 import random
-
 import csv
 
-matriz = []
-
-with open('archivo.csv', newline='') as archivo_csv:
-    lector_csv = csv.reader(archivo_csv, delimiter=',')
-    for fila in lector_csv:
-        matriz.append(fila)
 
 
-print("matriz",matriz)
-print( "fila 0",matriz[1][0])
 
 
 def control():
@@ -92,7 +83,7 @@ def control():
 
 def ecuaciones_bellman():
     "Se presupone con la iteración 0 ya esta hecha, por tanto los valores de los estados sera el coste más bajo"
-
+    matriz = open_data()
     coste_e = 2
     coste_a = 1
 
@@ -100,15 +91,12 @@ def ecuaciones_bellman():
         costemin = coste_a
     else:
         costemin = coste_e
+
     V22 = 0
     V16 = V165 = V17 = V175 = V18 = V185 = V19 = V195 = V20 = V205 = V21 = V215 = V225 = V23 = V235 = V24 = V245 = V25 = costemin
 
-
-
-
     iteracion = 1
     aux = 0
-
 
     while (V16 - aux > 0.00001 and iteracion < 10000):
 
@@ -195,34 +183,20 @@ def ecuaciones_bellman():
         print("V25", V25_new)
 
 
-        V16 = V16_new
-        V165 = V165_new
-        V17 = V17_new
-        V175 = V17_new
-        V18 = V18_new
-        V185 = V185_new
-        V19 = V19_new
-        V195 = V195_new
-        V205 = V205_new
-        V21 = V215_new
-        V215 = V215_new
-        V225 = V225_new
-        V23 = V23_new
-        V235 =V235_new
-        V24 = V24_new
-        V245 = V245_new
-        V25 = V25_new
+        V16 = V16_new ; V165 = V165_new ; V17 = V17_new ; V175 = V175_new ; V18 = V18_new ; V185 = V185_new ; V19 = V19_new
+        V195 = V195_new ; V205 = V205_new ; V21 = V215_new ; V215 = V215_new ;  V225 = V225_new ; V23 = V23_new ; V235 =V235_new
+        V24 = V24_new ;  V245 = V245_new ; V25 = V25_new
 
         iteracion += 1
         print("iteracion valores",iteracion)
     valores = {"16.0": V16, "16.5" : V165, "17.0": V17, "17.5" : V175, "18.0": V18, "18.5": V185, "19.0" : V19, "19.5": V195, "20.0": V20,
                 "20.5": V205, "21.0": V21, "21.5" : V215, "22.0": 0, "22.5": V225, "23.0" : V23, "23.5": V235, "24.0": V24, "24.5" : V245, "25.0" : V25}
 
-    return politica_optima(coste_a, coste_e, valores)
+    return politica_optima(coste_a, coste_e, valores, matriz)
 
 
 
-def politica_optima(coste_a, coste_e, valores):
+def politica_optima(coste_a, coste_e, valores, matriz):
 
     diccionario = {"16.0": None, "16.5": None, "17.0": None, "17.5": None, "18.0": None, "18.5": None, "19.0": None,
                    "19.5": None, "20.0": None,
@@ -382,6 +356,17 @@ def politica_optima(coste_a, coste_e, valores):
         diccionario["25.0"] = False
     print(diccionario)
     return diccionario
+
+def open_data():
+
+    matriz = []
+    with open('archivo.csv', newline='') as archivo_csv:
+        lector_csv = csv.reader(archivo_csv, delimiter=',')
+        for fila in lector_csv:
+            matriz.append(fila)
+    print("matriz", matriz)
+    print("fila 0", matriz[1][0])
+    return matriz
 
 
 if __name__ == "__main__":
