@@ -83,7 +83,7 @@ def control():
 
 def ecuaciones_bellman():
     "Se presupone con la iteración 0 ya esta hecha, por tanto los valores de los estados sera el coste más bajo"
-    matriz = open_data()
+    matriz = open_data("archivo.csv")
     coste_e = 2
     coste_a = 1
 
@@ -357,10 +357,10 @@ def politica_optima(coste_a, coste_e, valores, matriz):
     print(diccionario)
     return diccionario
 
-def open_data():
+def open_data(inputfile):
 
     matriz = []
-    with open('archivo.csv', newline='') as archivo_csv:
+    with open(inputfile, newline='') as archivo_csv:
         lector_csv = csv.reader(archivo_csv, delimiter=',')
         for fila in lector_csv:
             matriz.append(fila)
