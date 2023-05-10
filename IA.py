@@ -95,10 +95,12 @@ def ecuaciones_bellman():
 
     iteracion = 1
     aux = 0
+    aux2 = 0
 
-    while (V16 - aux > 0.00001 and iteracion < 10000):
+    while (V16 - aux > 0.00001 and V25 - aux2 > 0.00001  and iteracion < 10000):
 
         aux = V16
+        aux2 = V25
         print("Iteración:", iteracion)
         V16_new = min( coste_e + float(matriz[1][1]) * V16 + float(matriz[1][2]) * V165 + float(matriz[1][3]) * V17,
                        coste_a + float(matriz[2][1]) * V16 + float(matriz[2][2]) * V165 + float(matriz[2][3]) * V17)
