@@ -362,12 +362,10 @@ def open_data(inputfile):
         for fila in lector_csv:
             matriz.append(fila)
     print("matriz", matriz)
-    print("fila 0", matriz[1][1])
-    print("fila 0", matriz[2][1])
     return matriz
 
 # una funcion para crear el output, csv con inputs
 # En el output sacar 1) la politica optima de todos los estados, 2) los valores de todos los estados
 # hacer una grafica
 if __name__ == "__main__":
-    control()
+    ecuaciones_bellman()
