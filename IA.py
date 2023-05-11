@@ -4,7 +4,7 @@ import csv
 
 def control():
     temperaturas = (16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0, 24.5, 25.0)
-    calefaccion = False
+
     tiempo = 0
     calefaccion_tiempo = 1800
     aux = random.choice(temperaturas)
@@ -12,7 +12,13 @@ def control():
     diccionario = ecuaciones_bellman()
     temperatura_objetivo = 22
 
+
     while aux != temperatura_objetivo:
+        if diccionario[str(aux)] == False:
+            calefaccion = False
+
+        if diccionario[str(aux)] == True:
+            calefaccion = True
         num = random.random()
         if calefaccion == True:
             if aux == 16:
@@ -67,23 +73,23 @@ def control():
         tiempo += calefaccion_tiempo
         horas = tiempo/3600
 
-        print("Temperatura:", aux, "Hora:", horas, "Iteración:", iteracion )
+        print("Temperatura:", aux, "Hora:", horas, "Iteración:", iteracion, "calefaccion", calefaccion )
         "dependiendo del aux hay que sacar su politica optima"
 
         if aux == 22.0:
             break
 
-        if diccionario[str(aux)] == False:
-            calefaccion = False
 
-        if diccionario[str(aux)] == True:
-            calefaccion = True
 
 def ecuaciones_bellman():
     "Se presupone con la iteración 0 ya esta hecha, por tanto los valores de los estados sera el coste más bajo"
     matriz = open_data("archivo.csv")
-    coste_e = 2
-    coste_a = 1
+    costes = open_data("costes.csv")
+    inputs = open_data("inputs.csv")
+    coste_e = int(costes[1][1])
+    coste_a = int(costes[2][1])
+    tolerancia = float(inputs[2][1])
+    iteracion_max = int(inputs[1][1])
 
     if coste_a < coste_e:
         costemin = coste_a
@@ -97,7 +103,7 @@ def ecuaciones_bellman():
     aux = 0
     aux2 = 0
 
-    while (V16 - aux > 0.00001 and V25 - aux2 > 0.00001  and iteracion < 10000):
+    while (V16 - aux > tolerancia and V25 - aux2 > tolerancia  and iteracion < iteracion_max):
 
         aux = V16
         aux2 = V25
@@ -130,7 +136,7 @@ def ecuaciones_bellman():
                        coste_a + float(matriz[14][6]) * V185 + float(matriz[14][7]) * V19 + float(matriz[14][8]) * V195)
         print("V19", V19_new)
 
-        V195_new = min( coste_e + float(matriz[15][7]) * V19 + float(matriz[15][8]) * V195 + float(matriz[15][9]) * V20 + float(matriz[15][11]) * V205,
+        V195_new = min( coste_e + float(matriz[15][7]) * V19 + float(matriz[15][8]) * V195 + float(matriz[15][9]) * V20 + float(matriz[15][10]) * V205,
                         coste_a + float(matriz[16][7]) * V19 + float(matriz[16][8]) * V195 + float(matriz[16][9]) * V20)
         print("V195", V195_new)
 
@@ -150,47 +156,39 @@ def ecuaciones_bellman():
                         coste_a + float(matriz[24][11]) * V21 + float(matriz[24][12]) * V215 + float(matriz[24][13]) * V22)
         print("V215", V215_new)
 
-        V225_new = min(
-            coste_e + float(matriz[27][13]) * V22 + float(matriz[27][14]) * V225 + float(matriz[27][15]) * V23 + float(matriz[27][16]) * V235,
-            coste_a + float(matriz[28][13]) * V22 + float(matriz[28][14]) * V225 + float(matriz[28][15]) * V23)
+        V225_new = min( coste_e + float(matriz[27][13]) * V22 + float(matriz[27][14]) * V225 + float(matriz[27][15]) * V23 + float(matriz[27][16]) * V235,
+                        coste_a + float(matriz[28][13]) * V22 + float(matriz[28][14]) * V225 + float(matriz[28][15]) * V23)
         print("V225", V225_new)
 
-        V23_new = min(
-            coste_e + float(matriz[29][14]) * V225 + float(matriz[29][15]) * V23 + float(matriz[29][16]) * V235 + float(
-                matriz[29][17]) * V24,
-            coste_a + float(matriz[30][14]) * V225 + float(matriz[30][15]) * V23 + float(matriz[30][16]) * V235)
+        V23_new = min( coste_e + float(matriz[29][14]) * V225 + float(matriz[29][15]) * V23 + float(matriz[29][16]) * V235 + float(matriz[29][17]) * V24,
+                       coste_a + float(matriz[30][14]) * V225 + float(matriz[30][15]) * V23 + float(matriz[30][16]) * V235)
         print("V23", V23_new)
 
-        V235_new = min(
-            coste_e + float(matriz[31][15]) * V23 + float(matriz[31][16]) * V235 + float(matriz[31][17]) * V24 + float(
-                matriz[31][18]) * V245,
-            coste_a + float(matriz[32][15]) * V23 + float(matriz[32][16]) * V235 + float(matriz[32][17]) * V24)
+        V235_new = min( coste_e + float(matriz[31][15]) * V23 + float(matriz[31][16]) * V235 + float(matriz[31][17]) * V24 + float(matriz[31][18]) * V245,
+                        coste_a + float(matriz[32][15]) * V23 + float(matriz[32][16]) * V235 + float(matriz[32][17]) * V24)
         print("V235", V235_new)
 
-        V24_new = min(
-            coste_e + float(matriz[33][16]) * V235 + float(matriz[33][17]) * V24 + float(matriz[33][18]) * V245 + float(
-                matriz[33][19]) * V25,
-            coste_a + float(matriz[34][16]) * V235 + float(matriz[34][17]) * V24 + float(matriz[34][18]) * V245)
+        V24_new = min( coste_e + float(matriz[33][16]) * V235 + float(matriz[33][17]) * V24 + float(matriz[33][18]) * V245 + float(matriz[33][19]) * V25,
+                       coste_a + float(matriz[34][16]) * V235 + float(matriz[34][17]) * V24 + float(matriz[34][18]) * V245)
         print("V24", V24_new)
 
-        V245_new = min(
-            coste_e + float(matriz[35][19]) * V25 + float(matriz[35][18]) * V245 + float(matriz[35][17]) * V24,
-            coste_a + float(matriz[36][19]) * V25 + float(matriz[36][18]) * V245 + float(matriz[36][17]) * V24)
+        V245_new = min( coste_e + float(matriz[35][19]) * V25 + float(matriz[35][18]) * V245 + float(matriz[35][17]) * V24,
+                        coste_a + float(matriz[36][19]) * V25 + float(matriz[36][18]) * V245 + float(matriz[36][17]) * V24)
         print("V245", V245_new)
 
-        V25_new = min(coste_e + float(matriz[37][19]) * V25 + float(matriz[37][18]) * V245,
-                      coste_a + float(matriz[38][19]) * V25 + float(matriz[38][18]) * V245)
+        V25_new = min( coste_e + float(matriz[37][19]) * V25 + float(matriz[37][18]) * V245,
+                       coste_a + float(matriz[38][19]) * V25 + float(matriz[38][18]) * V245)
         print("V25", V25_new)
 
 
         V16 = V16_new ; V165 = V165_new ; V17 = V17_new ; V175 = V175_new ; V18 = V18_new ; V185 = V185_new ; V19 = V19_new
-        V195 = V195_new ; V205 = V205_new ; V21 = V215_new ; V215 = V215_new ;  V225 = V225_new ; V23 = V23_new ; V235 =V235_new
+        V195 = V195_new ; V20 = V20_new ; V205 = V205_new ; V21 = V215_new ; V215 = V215_new ;  V225 = V225_new ; V23 = V23_new ; V235 =V235_new
         V24 = V24_new ;  V245 = V245_new ; V25 = V25_new
 
         iteracion += 1
         print("iteracion valores",iteracion)
     valores = {"16.0": V16, "16.5" : V165, "17.0": V17, "17.5" : V175, "18.0": V18, "18.5": V185, "19.0" : V19, "19.5": V195, "20.0": V20,
-                "20.5": V205, "21.0": V21, "21.5" : V215, "22.0": 0, "22.5": V225, "23.0" : V23, "23.5": V235, "24.0": V24, "24.5" : V245, "25.0" : V25}
+                "20.5": V205, "21.0": V21, "21.5" : V215, "22.0": V22, "22.5": V225, "23.0" : V23, "23.5": V235, "24.0": V24, "24.5" : V245, "25.0" : V25}
 
     return politica_optima(coste_a, coste_e, valores, matriz)
 
@@ -199,9 +197,8 @@ def ecuaciones_bellman():
 def politica_optima(coste_a, coste_e, valores, matriz):
 
     diccionario = {"16.0": None, "16.5": None, "17.0": None, "17.5": None, "18.0": None, "18.5": None, "19.0": None,
-                   "19.5": None, "20.0": None,
-                   "20.5": None, "21.0": None, "21.5": None, "22.5": None, "23.0": None, "23.5": None, "24.0": None,
-                   "24.5": None, "25.0": None}
+                   "19.5": None, "20.0": None, "20.5": None, "21.0": None, "21.5": None, "22.5": None, "23.0": None,
+                   "23.5": None, "24.0": None, "24.5": None, "25.0": None}
 
     V16e = coste_e + float(matriz[1][1]) * valores["16.0"] + float(matriz[1][2]) * valores["17.0"] + float(
         matriz[1][3]) * valores["16.5"]
@@ -314,7 +311,7 @@ def politica_optima(coste_a, coste_e, valores, matriz):
     if V225e < V225a:
         diccionario["22.5"] = True
     else:
-        diccionario["22.5"] = True
+        diccionario["22.5"] = False
 
     V23e = coste_e + float(matriz[29][14]) * valores["22.5"] + float(matriz[29][15]) * valores["23.0"] +\
            float(matriz[29][16]) * valores["23.5"] + float(matriz[29][17]) * valores["24.0"]
@@ -365,9 +362,12 @@ def open_data(inputfile):
         for fila in lector_csv:
             matriz.append(fila)
     print("matriz", matriz)
-    print("fila 0", matriz[1][0])
+    print("fila 0", matriz[1][1])
+    print("fila 0", matriz[2][1])
     return matriz
 
-
+# una funcion para crear el output, csv con inputs
+# En el output sacar 1) la politica optima de todos los estados, 2) los valores de todos los estados
+# hacer una grafica
 if __name__ == "__main__":
     control()

@@ -1,0 +1,4 @@
+Inputs
+iteracion_max, 10000
+tolerancia, 0.00001
+temp_objetivo, 22.0
