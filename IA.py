@@ -4,13 +4,13 @@ import csv
 
 def control():
     temperaturas = (16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5, 24.0, 24.5, 25.0)
-
+    inputs = open_data("inputs.csv")
     tiempo = 0
     calefaccion_tiempo = 1800
     aux = random.choice(temperaturas)
     iteracion = 0
     diccionario = ecuaciones_bellman()
-    temperatura_objetivo = 22
+    temperatura_objetivo = inputs[3][1]
 
 
     while aux != temperatura_objetivo:
