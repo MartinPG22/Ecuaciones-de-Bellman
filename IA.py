@@ -188,7 +188,7 @@ def politica_optima(coste_a, coste_e, valores, matriz):
     "Calcula la politica optima para los estados en funcion de los valores obtenidos"
 
     diccionario = {"16.0": None, "16.5": None, "17.0": None, "17.5": None, "18.0": None, "18.5": None, "19.0": None,
-                   "19.5": None, "20.0": None, "20.5": None, "21.0": None, "21.5": None, "22.0": True, "22.5": None, "23.0": None,
+                   "19.5": None, "20.0": None, "20.5": None, "21.0": None, "21.5": None, "22.0": "None", "22.5": None, "23.0": None,
                    "23.5": None, "24.0": None, "24.5": None, "25.0": None}
 
     V16e = coste_e + float(matriz[1][1]) * valores["16.0"] + float(matriz[1][2]) * valores["17.0"] + float(
