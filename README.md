@@ -1,44 +1,53 @@
-# Termostato Óptimo con Programación Dinámica
-
-## Descripción
-Este proyecto implementa un **control óptimo de un termostato** utilizando **Ecuaciones de Bellman** para determinar la política óptima de encendido y apagado del sistema de calefacción. La meta es minimizar el **costo de operación** mientras se mantiene la temperatura dentro de un rango deseado.
+Aquí tienes la versión en inglés de tu README:  
 
 ---
-## 📋 Características
-- Modelado del problema utilizando **programación dinámica**.
-- Implementación de la ecuación de Bellman para encontrar la política óptima.
-- Simulación del comportamiento del termostato con diferentes condiciones iniciales.
-- Evaluación del impacto de diferentes costos y configuraciones.
-  
----
-## 💻 Instalación y Uso
-### Requisitos
-Este proyecto está desarrollado en **Python 3** y requiere las siguientes bibliotecas:
+
+# **Optimal Thermostat with Dynamic Programming**  
+
+## **Description**  
+This project implements an **optimal thermostat control** using **Bellman Equations** to determine the optimal heating system on/off policy. The goal is to minimize **operational costs** while maintaining the temperature within a desired range.  
+
+---  
+## **📋 Features**  
+- Problem modeling using **dynamic programming**.  
+- Implementation of the Bellman equation to determine the optimal policy.  
+- Simulation of thermostat behavior under different initial conditions.  
+- Evaluation of the impact of different costs and configurations.  
+
+---  
+## **💻 Installation & Usage**  
+
+### **Requirements**  
+This project is developed in **Python 3** and requires the following libraries:  
 ```bash
 pip install numpy matplotlib
-```
----
-### 🚀 Ejecución
-Para ejecutar el programa, simplemente corre el script principal:
+```  
+
+---  
+### **🚀 Execution**  
+To run the program, simply execute the main script:  
 ```bash
-python termostato.py
-```
+python thermostat.py
+```  
+This will generate graphs and statistics on the thermostat’s operation under the optimal policy.  
 
-Esto generará gráficos y estadísticas sobre la operación del termostato bajo la política óptima determinada.
+---  
+## **Technical Explanation**  
+The problem is modeled as a **Markov Decision Process (MDP)** with the following elements:  
+- **States**: The current system temperature.  
+- **Actions**: Turning the heating system on or off.  
+- **Rewards**: Costs associated with energy consumption and penalties for deviations from the target temperature.  
+- **Bellman Equation**: Used to compute optimal values and derive the optimal control policy.  
+
+---  
+## **Expected Results**  
+By executing the model, an optimal strategy is obtained that balances energy costs and thermal stability. Graphs are provided showing temperature over time and decisions made at each moment.  
+
+---  
+## **Team Members**  
+- **Martín Portugal**  
+- **Jorge Viñas**  
 
 ---
-## Explicación Técnica
-El problema se modela como un **proceso de decisión de Markov (MDP)** con los siguientes elementos:
-- **Estados**: La temperatura actual del sistema.
-- **Acciones**: Encender o apagar la calefacción.
-- **Recompensas**: Costo asociado a la energía consumida y penalización por desviaciones de la temperatura objetivo.
-- **Ecuación de Bellman**: Se usa para calcular los valores óptimos y derivar la política de control óptima.
-- 
----
-## Resultados Esperados
-Al ejecutar el modelo, se obtiene una estrategia óptima que balancea el costo de energía y la estabilidad térmica. Se presentan gráficos de temperatura en función del tiempo y decisiones tomadas en cada instante.
 
----
-## Miembros
-- Martín Portugal
-- No me acuerdo
+Let me know if you'd like any refinements! 🚀
